@@ -429,10 +429,10 @@ const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", ticketSchema);
 export default Ticket;
 ```
 
-- Create an "api" folder (in app) and "route.js" inside it
+- Create an "api" and "Tickets" folder (in app) and "route.js" inside it
 
 ``` javascript
-import Ticket from "../(models)/Ticket";
+import Ticket from "@/app/(models)/Ticket"; // instead of "../../(models/Ticket"
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -664,10 +664,21 @@ const TicketForm = () => {
                 className="btn"
                 value="Create Ticket"
                 type="submit" 
-
             />
         </form>
     </div>
   )
+}
+```
+
+- Add a GET function in route.js
+``` javascript
+export async function GET() {
+    try {
+        const tickets = await Ticket.find();
+        return NextResponse.json({ tickets }, { status: 200})
+    } catch (error) {
+        return NextResponse.json({message: "Error", error}, { status: 500})
+    }
 }
 ```
