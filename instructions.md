@@ -1,4 +1,12 @@
-# Instructions
+# Ticket App Instructions
+
+- [Ticket App Instructions](#ticket-app-instructions)
+  - [Installation](#installation)
+  - [Extensions](#extensions)
+  - [Steps](#steps)
+    - [Frontend](#frontend)
+    - [Backend](#backend)
+
 
 ## Installation
 ``` bash 
@@ -14,6 +22,9 @@ npm run dev
 - **Tailwind CSS IntelliSense** (Tailwind Labs)
 
 ## Steps
+
+### Frontend
+
 - Clear all code in globals.css file
 - Rename app/page.js in page.jsx -> rafce with Dashboard component
 - Create a new folder TicketPage with page.jsx -> rafce with TicketPage component (we can navigate on each page with localhost:3000/TicketPage)
@@ -376,3 +387,5 @@ const Dashboard = () => {
   )
 }
 ```
+
+### Backend
