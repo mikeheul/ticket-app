@@ -447,3 +447,227 @@ export async function POST(req) {
     }
 }
 ```
+
+- Create a TicketForm component (app/components)
+``` javascript
+"use client"; // explicit use of client javascript
+
+import { useRouter } from "next/navigation"
+import React, {useState} from "react"
+
+const TicketForm = () => {
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        const name = e.target.name
+
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const startingTicketData = {
+        title: "",
+        description: "",
+        priority: 1,
+        progress: 0,
+        status: "not started",
+        category: "Hadware Problem"
+    };
+
+    const [formData, setFormData] = useState(startingTicketData);
+
+  return (
+    <div className="flex justify-center">
+        <form>
+            <h3>Create Your Ticket</h3>
+            <label htmlFor="">Title</label>
+            <input 
+                id="title" 
+                name="title" 
+                type="text" 
+                onChange={handleChange} 
+                required={true} 
+                value={formData.title} />
+        </form>
+    </div>
+  )
+}
+
+export default TicketForm
+```
+
+- Insert Form in TicketPage component (new Ticket) and access it in browser (ticket icon displays the form !)
+``` javascript
+import TicketForm from "@/app/(components)/TicketForm"
+
+const TicketPage = ({ params }) => {
+  return (
+    <TicketForm />
+  )
+}
+
+export default TicketPage
+```
+
+- Add style to globals.css
+``` css
+form {
+    @apply rounded-xl p-4;
+}
+label {
+    @apply mt-4;
+}
+input, select, textarea {
+    @apply m-1 rounded bg-card p-1;
+}
+```
+
+- Add form elements (textarea, ...) and handleSubmit method
+``` javascript
+const TicketForm = () => {
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        const name = e.target.name
+
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = () => {
+        //console.log("submitted");
+    }
+
+    const startingTicketData = {
+        title: "",
+        description: "",
+        priority: 1,
+        progress: 0,
+        status: "not started",
+        category: "Hadware Problem"
+    };
+
+    const [formData, setFormData] = useState(startingTicketData);
+
+  return (
+    <div className="flex justify-center">
+        <form className="flex flex-col gap-3 w-1/2" method="post" onSubmit={handleSubmit} >
+            <h3>Create Your Ticket</h3>
+            <label htmlFor="">Title</label>
+            <input 
+                id="title" 
+                name="title" 
+                type="text" 
+                onChange={handleChange} 
+                required={true} 
+                value={formData.title} 
+            />
+            <label htmlFor="">Description</label>
+            <textarea 
+                id="description" 
+                name="description" 
+                onChange={handleChange} 
+                required={true} 
+                value={formData.description} 
+                rows="5"
+            />
+
+            <label htmlFor="">Category</label>
+            <select 
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange} 
+                >
+                <option value="Hardware Problem">Hardware Problem</option>
+                <option value="Software Problem">Software Problem</option>
+                <option value="Project">Project</option>
+            </select>
+
+            <label htmlFor="">Priority</label>
+            <div>
+                <input 
+                    id="priority-1"
+                    name="priority"
+                    type="radio" 
+                    onChange={handleChange}
+                    value={1}
+                    checked={formData.priority == 1} 
+                />
+                <label htmlFor="">1</label>
+                <input 
+                    id="priority-2"
+                    name="priority"
+                    type="radio" 
+                    onChange={handleChange}
+                    value={2}
+                    checked={formData.priority == 2} 
+                />
+                <label htmlFor="">2</label>
+                <input 
+                    id="priority-3"
+                    name="priority"
+                    type="radio" 
+                    onChange={handleChange}
+                    value={3}
+                    checked={formData.priority == 3} 
+                />
+                <label htmlFor="">3</label>
+                <input 
+                    id="priority-4"
+                    name="priority"
+                    type="radio" 
+                    onChange={handleChange}
+                    value={4}
+                    checked={formData.priority == 4} 
+                />
+                <label htmlFor="">4</label>
+                <input 
+                    id="priority-5"
+                    name="priority"
+                    type="radio" 
+                    onChange={handleChange}
+                    value={5}
+                    checked={formData.priority == 5} 
+                />
+                <label htmlFor="">5</label>
+            </div>
+
+            <label htmlFor="">Progress</label>
+            <input 
+                type="range" 
+                name="progress" 
+                id="progress" 
+                value={formData.progress}
+                min="0"
+                max="100"
+                onChange={handleChange}
+            />
+
+            <label htmlFor="">Status</label>
+            <select 
+                name="status" 
+                id="status"
+                value={formData.status}
+                onChange={handleChange}
+            >
+                <option value="not started">Not Started</option>
+                <option value="started">Started</option>
+                <option value="done">Done</option>
+            </select>
+
+            <input 
+                className="btn"
+                value="Create Ticket"
+                type="submit" 
+
+            />
+        </form>
+    </div>
+  )
+}
+```
