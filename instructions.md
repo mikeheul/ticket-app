@@ -193,3 +193,82 @@ const Nav = () => {
   )
 }
 ```
+
+- Create a new component : DeleteBlock.jsx
+``` javascript
+import { faX } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+const DeleteBlock = () => {
+  return (
+    <FontAwesomeIcon 
+        icon={faX} 
+        className="text-red-400 hover:cursor-pointer hover:text-red-200"
+    />
+  )
+}
+
+export default DeleteBlock
+```
+
+- Create a new component : TicketCard.jsx and update Dashboard component (page.jsx)
+``` javascript
+import DeleteBlock from "./DeleteBlock"
+
+const TicketCard = () => {
+    return (
+        <div>
+        <DeleteBlock />
+    </div>
+  )
+}
+
+export default TicketCard
+```
+``` javascript
+import TicketCard from "./(components)/TicketCard"
+
+const Dashboard = () => {
+  return (
+    <div>
+      <TicketCard />
+      <TicketCard />
+      <TicketCard />
+    </div>
+  )
+}
+
+export default Dashboard
+```
+
+- Create a PriorityDisplay component (rafce)
+``` javascript
+import { faFire } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+const PriorityDisplay = () => {
+  return (
+    <div className="flex justify-start align-baseline">
+        <FontAwesomeIcon icon={faFire} className="text-red-400"/>
+        <FontAwesomeIcon icon={faFire} className="text-red-400"/>
+        <FontAwesomeIcon icon={faFire} className="text-red-400"/>
+        <FontAwesomeIcon icon={faFire} className="text-red-400"/>
+        <FontAwesomeIcon icon={faFire} className="text-red-400"/>
+    </div>
+  )
+}
+
+export default PriorityDisplay
+```
+
+- Update TicketCard component
+``` javascript
+const TicketCard = () => {
+  return (
+    <div>
+        <DeleteBlock />
+        <PriorityDisplay />
+    </div>
+  )
+}
+```
