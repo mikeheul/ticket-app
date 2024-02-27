@@ -272,3 +272,80 @@ const TicketCard = () => {
   )
 }
 ```
+
+- Create ProgressDisplay and StatusDisplay components
+``` javascript
+const ProgressDisplay = () => {
+  return (
+    <div className="w-full bg-gray-200 rounded-full h-2.5">
+      <div 
+        className="bg-blue-600 h-2.5 rounded-full" 
+        style={{ width: "75%" }}>
+      </div>
+    </div>
+  )
+}
+
+export default ProgressDisplay
+```
+``` javascript
+const StatusDisplay = () => {
+  return (
+    <span className="inline-block rounded-full px-2 py-1 text-xs font-semibold text-gray-700 bg-green-200">
+        done
+    </span>
+  )
+}
+
+export default StatusDisplay
+```
+
+- Update TicketCard component and globals.css
+
+``` css
+/* base layer (<-> root in native CSS) */ 
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-bold;
+    }
+
+    h1 {
+        @apply text-4xl
+    }
+    h2 {
+        @apply text-3xl
+    }
+    h3 {
+        @apply text-2xl
+    }
+    h4 {
+        @apply text-xl
+    }
+}
+```
+
+``` javascript
+const TicketCard = () => {
+  return (
+    <div className="flex flex-col bg-card hover:bg-card-hover rounded-md shadow-lg p-3 m-2">
+        <div className="flex mb-3">
+            <PriorityDisplay />
+            <div className="ml-auto">
+                <DeleteBlock />
+            </div>
+        </div>
+        <h4>Ticket Title</h4>
+        <hr className="h-px border-0 bg-page mb-2"/>
+        <p className="whitespace-pre-wrap">
+            this is the ticket description
+        </p>
+        <ProgressDisplay />
+        <StatusDisplay />
+    </div>
+  )
+}
+```
+
