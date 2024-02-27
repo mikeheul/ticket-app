@@ -6,6 +6,8 @@
   - [Steps](#steps)
     - [Frontend](#frontend)
     - [Backend](#backend)
+      - [Packages](#packages)
+      - [Configuration](#configuration)
 
 
 ## Installation
@@ -389,3 +391,40 @@ const Dashboard = () => {
 ```
 
 ### Backend
+
+#### Packages
+``` bash
+npm install mongodb mongoose
+```
+
+#### Configuration
+- root folder : .env.local with database connection string 
+```
+MONGODB_URI=mongodb://localhost:27017/ticketDB
+```
+
+- In app folder, create a (modules) folder and Ticket.js to implement Schema
+``` javascript
+import mongoose, {Schema} from "mongoose";
+
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
+
+const ticketSchema = new Schema(
+    {
+        title: String,
+        description: String,
+        category: String,
+        priority: Number,
+        progress: Number,
+        status: String,
+        active: Boolean
+    },
+    {
+        timestamps: true,
+    }
+)
+
+const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", ticketSchema);
+export default Ticket;
+```
