@@ -114,3 +114,23 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 config.autoAddCss = false;
 ```
+- Update layout.js with tailwind classes and custom classes (bg-page and text-default-text)
+``` javascript
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <main className="flex flex-col h-screen max-h-screen">
+          <Nav />
+          <div className="flex-grow overflow-y-auto bg-page text-default-text">{children}</div>
+        </main>
+      </body>
+    </html>
+  );
+}
+```
+
+- Update Nav component in Nav.jsx
+``` javascript
+
+```
