@@ -132,5 +132,48 @@ export default function RootLayout({ children }) {
 
 - Update Nav component in Nav.jsx
 ``` javascript
+import { faHome, faTicket } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Link from "next/link"
+
+const Nav = () => {
+  return (
+    <nav>
+        <div>
+            <Link href="/">
+                <FontAwesomeIcon icon={faHome} className="icon" />
+            </Link>
+            <Link href="/TicketPage/new">
+                <FontAwesomeIcon icon={faTicket} className="icon" />
+            </Link>
+        </div>
+        <div>
+            <p className="text-default-text">micka@exemple.com</p>
+        </div>
+    </nav>
+  )
+}
+
+export default Nav
+```
+
+- Update globals.css to create "icon" class (on Link component in Nav.jsx)
+``` css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .icon {
+        @apply text-default-text text-xl;
+    }
+    .btn {
+        @apply hover:no-underline bg-blue-accent hover:bg-dash-accent-hover tracking-wider w-full text-center text-nav font-bold cursor-pointer uppercase px-4 py-2 rounded-md transition-colors block;
+    }
+}
+```
+
+- Update Nav component
+``` javascript
 
 ```
