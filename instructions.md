@@ -823,3 +823,121 @@ const TicketCard = ({ticket}) => {
 ```
 
 - Create a new folder [id] and route.js in api/Ticket folder
+
+...route.js
+``` javascript
+import Ticket from "@/app/(models)/Ticket";
+import { NextResponse } from "next/server";
+
+export async function DELETE(req, {params}) {
+    try {
+        const {id} = params;
+        await Ticket.findByIdAndDelete(id);
+
+        return NextResponse.json({message: "Ticket deleted"}, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({message: "Error", error}, { status: 500 });
+    }
+}
+```
+...DeleteBlock.jsx
+``` javascript
+import { faX } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useRouter } from "next/navigation"
+
+const DeleteBlock = ({ id }) => {
+
+  const router = useRouter();
+
+  const deleteTicket = async () => {
+    const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
+      method: "DELETE"
+    });
+
+    if(res.ok){
+      router.refresh();
+    }
+    
+  }
+
+  return (
+    <FontAwesomeIcon 
+        icon={faX} 
+        className="text-red-400 hover:cursor-pointer hover:text-red-200"
+        onClick={deleteTicket}
+    />
+  )
+}
+
+export default DeleteBlock
+```
+
+...TicketCard.jsx
+``` javascript
+<DeleteBlock 
+    id={ticket._id}
+/>
+```
+
+- Add Link to update Ticket
+``` javascript
+<Link href={`/TicketPage/${ticket._id}`} style={({ display: "contents" })} >
+    <h4>{ticket.title}</h4>
+    <hr className="h-px border-0 bg-page mb-2"/>
+    <p className="whitespace-pre-wrap">
+        {ticket.description}
+    </p>
+    <div className="flex-grow"></div>
+    <div className="flex mt-2">
+        <div className="flex flex-col">
+            <p className="text-xs my-1">{formatTimestamp(ticket.createdAt)}</p>
+            <ProgressDisplay 
+                progress={ticket.progress}
+            />
+        </div>
+        <div className="ml-auto flex items-end">
+            <StatusDisplay 
+                status={ticket.status}
+            />
+        </div>
+    </div>
+</Link>
+```
+
+- Add EDITMODE to TicketPage
+``` javascript
+import TicketForm from "@/app/(components)/TicketForm"
+
+const getTicketById = async (id) => {
+
+  const res = await fetch(`http://localhost:3000/api/Tickets/${id}`, {
+    cache: "no-store"
+  })
+
+  if(!res.ok) {
+    throw new Error("Failed to get ticket.");
+  }
+
+  return res.json();
+}
+
+const TicketPage = async ({ params }) => {
+
+  const EDITMODE = params.id === "new" ? false : true;
+  let updateTicketData = {}
+  
+  if(EDITMODE) {
+    updateTicketData = await getTicketById(params.id);
+    console.log(updateTicketData);
+  }
+
+  return (
+    <TicketForm />
+  )
+}
+
+export default TicketPage
+```
+
+
