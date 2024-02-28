@@ -940,4 +940,37 @@ const TicketPage = async ({ params }) => {
 export default TicketPage
 ```
 
+- Update route.js (in [id] folder)
+``` javascript
+import Ticket from "@/app/(models)/Ticket";
+import { NextResponse } from "next/server";
+
+export async function GET(req, { params }) {
+    const { id } = params
+    const foundTicket = await Ticket.findOne({ _id: id })
+    return NextResponse.json({ foundTicket }, { status: 200 })
+}
+
+export async function DELETE(req, { params }) {
+    try {
+        const { id } = params;
+        await Ticket.findByIdAndDelete(id);
+
+        return NextResponse.json({ message: "Ticket deleted" }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
+    }
+}
+```
+
+- Finish EDITMODE options (like button and title captions)
+``` jsx
+<h3>{ EDITMODE ? "Update Your Ticket" : "Create Your Ticket" }</h3>
+
+<input 
+    className="btn"
+    value={ EDITMODE ? "Update Your Ticket" : "Create Your Ticket"}
+    type="submit" 
+/>
+```
 

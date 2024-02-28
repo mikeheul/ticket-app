@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation"
 import React, {useState} from "react"
 
-const TicketForm = () => {
+const TicketForm = ({ ticket }) => {
 
+    const EDITMODE = ticket._id === "new" ? false : true;
     const router = useRouter()
 
     const handleChange = (e) => {
@@ -43,12 +44,21 @@ const TicketForm = () => {
         category: "Hadware Problem"
     };
 
+    if(EDITMODE) {
+        startingTicketData["title"] = ticket.title
+        startingTicketData["description"] = ticket.description
+        startingTicketData["priority"] = ticket.priority
+        startingTicketData["progress"] = ticket.progress
+        startingTicketData["status"] = ticket.status
+        startingTicketData["category"] = ticket.category
+    }
+
     const [formData, setFormData] = useState(startingTicketData);
 
-  return (
+    return (
     <div className="flex justify-center">
         <form className="flex flex-col gap-3 w-1/2" method="post" onSubmit={handleSubmit} >
-            <h3>Create Your Ticket</h3>
+            <h3>{ EDITMODE ? "Update Your Ticket" : "Create Your Ticket" }</h3>
             <label htmlFor="">Title</label>
             <input 
                 id="title" 
@@ -154,12 +164,11 @@ const TicketForm = () => {
 
             <input 
                 className="btn"
-                value="Create Ticket"
+                value={ EDITMODE ? "Update Your Ticket" : "Create Your Ticket"}
                 type="submit" 
             />
         </form>
     </div>
-  )
-}
+)}
 
 export default TicketForm
