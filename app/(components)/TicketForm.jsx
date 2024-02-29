@@ -1,9 +1,9 @@
 "use client"; // explicit use of client javascript
 
 import { useRouter } from "next/navigation"
-import React, {useState} from "react"
+import React, { useState } from "react"
 
-const TicketForm = ({ ticket }) => {
+const TicketForm = ({ticket}) => {
 
     const EDITMODE = ticket._id === "new" ? false : true;
     const router = useRouter()
@@ -19,21 +19,33 @@ const TicketForm = ({ ticket }) => {
     };
 
     const handleSubmit = async (e) => {
-        //console.log("submitted");
         e.preventDefault();
-        const res = await fetch("/api/Tickets", {
-            method: "POST",
-            body: JSON.stringify({formData}),
-            "content-type": "application/json"
-        });
 
-        if(!res.ok) {
-            throw new Error("Failed to create Ticket.");
+        if(EDITMODE) {
+            const res = await fetch(`/api/Tickets/${ticket._id}`, {
+                method: "PUT",
+                body: JSON.stringify({ formData }),
+                "content-type": "application/json"
+            });
+
+            if(!res.ok) {
+                throw new Error("Failed to update Ticket.");
+            }
+        } else {    
+            const res = await fetch("/api/Tickets", {
+                method: "POST",
+                body: JSON.stringify({formData}),
+                "content-type": "application/json"
+            });
+
+            if(!res.ok) {
+                throw new Error("Failed to create Ticket.");
+            }
         }
 
         router.refresh();
         router.push("/");
-    }
+    };
 
     const startingTicketData = {
         title: "",
