@@ -28,12 +28,9 @@ const TicketPage = async ({ params }) => {
     updateTicketData = {
       _id: "new",
     }
-    return <TicketForm ticket={ updateTicketData } />;
   }
-
-  return (
-    <TicketForm />
-  )
+  
+  return <TicketForm ticket={ updateTicketData } />;
 }
 
 export default TicketPage
