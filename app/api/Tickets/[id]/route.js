@@ -32,7 +32,7 @@ export async function PUT(req, { params }) {
 
         const updateTicketData = await Ticket.findByIdAndUpdate(id, {
             ...ticketData
-        });
+        }, { new: true });
 
         return NextResponse.json({ message: "Ticket updated" }, { status: 200 });
     } catch (error) {
