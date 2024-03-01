@@ -1032,3 +1032,16 @@ const TicketPage = async ({ params }) => {
 
 export default TicketPage
 ```
+
+- Ordet by tickets by creation date ASC on homepage
+``` javascript
+export async function GET() {
+    try {
+        // get all tickets order by createdAt ASC
+        const tickets = await Ticket.find().sort( { createdAt: 1 } );
+        return NextResponse.json({ tickets }, { status: 200})
+    } catch (error) {
+        return NextResponse.json({message: "Error", error}, { status: 500})
+    }
+}
+```
