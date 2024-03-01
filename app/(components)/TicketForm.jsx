@@ -69,7 +69,7 @@ const TicketForm = ({ticket}) => {
 
     return (
     <div className="flex justify-center">
-        <form className="flex flex-col gap-3 w-1/2" method="post" onSubmit={handleSubmit} >
+        <form className="flex flex-col gap-3 w-11/12" method="post" onSubmit={handleSubmit} >
             <h3>{ EDITMODE ? "Update Your Ticket" : "Create Your Ticket" }</h3>
             <label htmlFor="">Title</label>
             <input 
